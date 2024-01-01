@@ -1,0 +1,30 @@
+body{
+    margin-right: 100px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    min-height: 100vh;
+}
+.container{
+    height: 500px;
+    width: 400px;
+    border: 1px solid black;
+}
+.container > form{
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    gap: 20px;
+}
+.btn-weather{
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+}
+
+input[type="text"] {
+    font-size: 20px;
+    width: 200px;
+}
