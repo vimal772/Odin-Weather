@@ -22,4 +22,39 @@ async function loadweather(location) {
     console.log(respone)
     const result = respone.current.condition.text
     console.log(result);
+    setBackGroud(result)
+}
+
+function setBackGroud(result) {
+    const body = document.querySelector('body')
+    const gradient = findGradinet(result)
+    console.log(gradient);
+    body.style.background = "linear-gradient(to bottom, "+ gradient + ")";
+}
+
+function findGradinet(weatherCondition) {
+    switch (weatherCondition) {
+        case "Sunny": 
+            return "#FFF7C9, #FFECB3";
+        case "Partly cloudy": 
+            return "#87CEFA, #FFFFFF";
+        case "Cloudy": 
+            return "#FFF7C9, #FFECB3";
+        case "Rainy": 
+            return "#FFF7C9, #FFECB3";
+        case "Showers": 
+            return "#FFF7C9, #FFECB3";
+        case "Thunderstroms": 
+            return "#FFF7C9, #FFECB3";
+        case "Snowy": 
+            return "#FFF7C9, #FFECB3";
+        case "Foggy": 
+            return "#FFF7C9, #FFECB3";
+        case "Windy": 
+            return "#FFF7C9, #FFECB3";
+        case "Hazy": 
+            return "#FFF7C9, #FFECB3";
+        default:
+            return "#FFFFFF, #FFFFFF"
+    }
 }
