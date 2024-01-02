@@ -1,3 +1,4 @@
+const img = document.createElement('img')
 // fetch('http://api.weatherapi.com/v1/current.json?key=c7f099f4e3bb448791561817232212&q=London&aqi=no',{mode: 'cors'}).then((respone)=>{
 //     return respone.json()
 // }).then((result)=>{
@@ -20,41 +21,59 @@ async function loadweather(location) {
     const path = await fetch(`http://api.weatherapi.com/v1/current.json?key=${weatherKey}&q=${location}&aqi=no`,{mode: 'cors'})
     const respone = await path.json()
     console.log(respone)
+    displayLocation(respone);
+    displayWeather(respone)
     const result = respone.current.condition.text
-    console.log(result);
-    setBackGroud(result)
+    getGif(result)
 }
 
-function setBackGroud(result) {
-    const body = document.querySelector('body')
-    const gradient = findGradinet(result)
-    console.log(gradient);
-    body.style.background = "linear-gradient(to bottom, "+ gradient + ")";
-}
-
-function findGradinet(weatherCondition) {
-    switch (weatherCondition) {
-        case "Sunny": 
-            return "#FFF7C9, #FFECB3";
-        case "Partly cloudy": 
-            return "#87CEFA, #FFFFFF";
-        case "Cloudy": 
-            return "#FFF7C9, #FFECB3";
-        case "Rainy": 
-            return "#FFF7C9, #FFECB3";
-        case "Showers": 
-            return "#FFF7C9, #FFECB3";
-        case "Thunderstroms": 
-            return "#FFF7C9, #FFECB3";
-        case "Snowy": 
-            return "#FFF7C9, #FFECB3";
-        case "Foggy": 
-            return "#FFF7C9, #FFECB3";
-        case "Windy": 
-            return "#FFF7C9, #FFECB3";
-        case "Hazy": 
-            return "#FFF7C9, #FFECB3";
-        default:
-            return "#FFFFFF, #FFFFFF"
+function displayWeather(respone) {
+    const currentWeather = {
+        cloud: respone.current.cloud,
+        temp: respone.current.temp_c,
+        humidity: respone.current.humidity,
+        wind: respone.current.wind_kph
     }
+    console.log(currentWeather);
+
+    const cloud = document.createElement('p')
+    const temp = document.createElement('p')
+    const humidity = document.createElement('p')
+    const wind = document.createElement('p')
+
+    cloud.textContent = currentWeather.cloud
+    temp.textContent = currentWeather.temp
+    humidity.textContent = currentWeather.humidity
+    wind.textContent = currentWeather.wind
+
+    const wrap = document.querySelector('.info-wrap')
+    wrap.appendChild(cloud)
+    wrap.appendChild(temp)
+    wrap.appendChild(humidity)
+    wrap.appendChild(wind)
+}
+
+function displayLocation(respone) {
+    const name  = respone.location.name
+    const country = respone.location.country
+    console.log(name, country);
+    const wrap = document.querySelector('.location-wrap')
+    const h1 = document.createElement('h1')
+    h1.textContent = name
+    const h3 = document.createElement('h3')
+    h3.textContent = country
+    wrap.appendChild(h1)
+    wrap.appendChild(h3)
+    
+}
+
+async function getGif(name) {
+    if(name === 'Partly cloudy') name = 'cloudy'
+    if(name === 'Clear') name = 'weather clear'
+    const result = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=eV8bEro9RWqY8fa5txBesSTQGfaNyFBB&s=${name}`,{mode: 'cors'})
+    const respone = await result.json()
+    img.classList.add('gif-img')
+    img.src = respone.data.images.original.url
+    const gif = document.querySelector('.gif-wrap')
+    gif.appendChild(img) 
 }

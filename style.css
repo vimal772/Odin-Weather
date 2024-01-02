@@ -1,16 +1,18 @@
 body{
-    margin-right: 100px;
+    background: lightblue;
     display: flex;
-    justify-content: end;
+    justify-content: center;
     align-items: center;
-    min-height: 100vh;
 }
 .container{
-    height: 500px;
-    width: 400px;
-    border: 1px solid black;
+    margin-top: 25px;
+    height: 90vh;
+    width: 30vw;
+    border-radius: 10px;
+    box-shadow: 0 0 1em black;
 }
 .container > form{
+    height: 20vh;
     padding: 20px;
     display: flex;
     align-items: center;
@@ -20,11 +22,46 @@ body{
 }
 .btn-weather{
     width: 200px;
-    height: 40px;
+    height: 30px;
     font-size: 20px;
 }
 
 input[type="text"] {
+    outline: none;
+    border: 0;
+    border-bottom: 2px solid;
     font-size: 20px;
     width: 200px;
+}
+
+label {
+    font-size: 24px;
+}
+
+.weather-result {
+    height: 60vh;
+    border: 2px solid;
+    display: grid;
+    grid-template-columns: repeat(2,15vw);
+    grid-template-rows: repeat(2,27vh);
+}
+
+.weather-result > div {
+    border: 1px solid;
+}
+
+.converter-wrap {
+    grid-column: 1/-1;
+}
+
+.footer > ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.gif-img {
+    width: 15vw;
+    height: 27vh;
 }
