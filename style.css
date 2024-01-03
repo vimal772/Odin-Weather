@@ -43,15 +43,19 @@ label {
     border: 2px solid;
     display: grid;
     grid-template-columns: repeat(2,15vw);
-    grid-template-rows: repeat(2,27vh);
+    grid-template-rows: repeat(1,27vh);
 }
 
 .weather-result > div {
     border: 1px solid;
 }
 
-.converter-wrap {
+.converter-wrap,
+.info-wrap {
     grid-column: 1/-1;
+}
+.info-wrap {
+    height: 27vh;
 }
 
 .footer > ul {
