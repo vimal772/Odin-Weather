@@ -19,7 +19,7 @@ weatherBtn.addEventListener('click',()=>{
 
 async function loadweather(location) {
     const weatherKey = 'c7f099f4e3bb448791561817232212';
-    const path = await fetch(`http://api.weatherapi.com/v1/current.json?key=${weatherKey}&q=${location}&aqi=no`,{mode: 'cors'})
+    const path = await fetch(`https://api.weatherapi.com/v1/current.json?key=${weatherKey}&q=${location}&aqi=no`,{mode: 'cors'})
     const respone = await path.json()
     const result = respone.current.condition.text
     displayLocation(respone);
