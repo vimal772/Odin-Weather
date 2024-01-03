@@ -79,3 +79,8 @@ label {
     font-size: 1.3rem;
     align-self: end;
 }
+
+.errmsg {
+    color: red;
+    font-size: 1.1rem;
+}

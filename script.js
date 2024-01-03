@@ -19,12 +19,21 @@ weatherBtn.addEventListener('click',()=>{
 
 async function loadweather(location) {
     const weatherKey = 'c7f099f4e3bb448791561817232212';
-    const path = await fetch(`https://api.weatherapi.com/v1/current.json?key=${weatherKey}&q=${location}&aqi=no`,{mode: 'cors'})
-    const respone = await path.json()
-    const result = respone.current.condition.text
-    displayLocation(respone);
-    fetchWeather(respone)
-    getGif(result)
+    try{
+        const path = await fetch(`https://api.weatherapi.com/v1/current.json?key=${weatherKey}&q=${location}&aqi=no`,{mode: 'cors'})
+
+        if(!path.ok){
+            throw new Error(`Faile to Load weather data ${path.status}`)
+        }
+        const respone = await path.json()
+        const result = respone.current.condition.text
+        displayLocation(respone);
+        fetchWeather(respone)
+        getGif(result)
+    } catch{
+        console.log('Error while loadind');
+        handleError()
+    }
 }
 
 async function getGif(name) {
@@ -55,6 +64,7 @@ function fetchWeather(respone) {
 }
 
 function displayLocation(respone) {
+    document.querySelector('.errmsg').textContent = '';
     const name  = respone.location.name
     const country = respone.location.country
     const wrap = document.querySelector('.location-wrap')
@@ -110,4 +120,10 @@ function displayWeather(currentWeather,isCelsius){
     wrap.appendChild(temp)
     wrap.appendChild(humidity)
     wrap.appendChild(wind)
+}
+
+
+function handleError() {
+    const msg = document.querySelector('.errmsg')
+    msg.textContent = 'Error: Please Enter Valid Location'
 }
