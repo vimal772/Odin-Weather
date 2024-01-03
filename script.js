@@ -35,18 +35,21 @@ function displayWeather(respone) {
         wind: respone.current.wind_kph
     }
     console.log(currentWeather);
+    const wrap = document.querySelector('.info-wrap')
+    while(wrap.firstChild){
+        wrap.removeChild(wrap.firstChild)
+    }
 
     const cloud = document.createElement('p')
     const temp = document.createElement('p')
     const humidity = document.createElement('p')
     const wind = document.createElement('p')
 
-    cloud.textContent = currentWeather.cloud
-    temp.textContent = currentWeather.temp
-    humidity.textContent = currentWeather.humidity
-    wind.textContent = currentWeather.wind
+    cloud.textContent = `cloud: ${currentWeather.cloud}`
+    temp.textContent = `temp: ${currentWeather.temp}\u00B0C`
+    humidity.textContent = `humidity: ${currentWeather.humidity}`
+    wind.textContent = `wind: ${currentWeather.wind} Kph`
 
-    const wrap = document.querySelector('.info-wrap')
     wrap.appendChild(cloud)
     wrap.appendChild(temp)
     wrap.appendChild(humidity)
@@ -58,6 +61,11 @@ function displayLocation(respone) {
     const country = respone.location.country
     console.log(name, country);
     const wrap = document.querySelector('.location-wrap')
+
+    while(wrap.firstChild){
+        wrap.removeChild(wrap.firstChild)
+    }
+
     const h1 = document.createElement('h1')
     h1.textContent = name
     const h3 = document.createElement('h3')
@@ -70,6 +78,7 @@ function displayLocation(respone) {
 async function getGif(name) {
     if(name === 'Partly cloudy') name = 'cloudy'
     if(name === 'Clear') name = 'weather clear'
+    if(name === 'Light drizzle') name = 'drizzle weather'
     const result = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=eV8bEro9RWqY8fa5txBesSTQGfaNyFBB&s=${name}`,{mode: 'cors'})
     const respone = await result.json()
     img.classList.add('gif-img')
