@@ -46,9 +46,7 @@ label {
     grid-template-rows: repeat(1,27vh);
 }
 
-.weather-result > div {
-    border: 1px solid;
-}
+
 
 .converter-wrap,
 .info-wrap {

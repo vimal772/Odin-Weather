@@ -1,10 +1,12 @@
 const img = document.createElement('img')
 const weatherBtn = document.querySelector('.btn-weather')
 const checkBox = document.querySelector('#converter')
+let currentWeather = {}
+let isCelsius
 
 checkBox.addEventListener('change',()=> {
     const isChecked = checkBox.checked
-    converter(checkBox,isChecked)
+    converter(isChecked)
 })
 
 weatherBtn.addEventListener('click',()=>{
@@ -38,13 +40,18 @@ async function getGif(name) {
 }
 
 function fetchWeather(respone) {
-    const currentWeather = {
+    currentWeather = {
         cloud: respone.current.cloud,
         temp: respone.current.temp_c,
+        faren: respone.current.temp_f,
         humidity: respone.current.humidity,
         wind: respone.current.wind_kph
     }
-    displayWeather(currentWeather)
+    if(checkBox.checked){
+        displayWeather(currentWeather,false)
+    }else{
+        displayWeather(currentWeather,true)
+    }
 }
 
 function displayLocation(respone) {
@@ -65,16 +72,28 @@ function displayLocation(respone) {
 }
 
 
-function converter(checkBox,isChecked) {
+function converter(isChecked) {
     if(isChecked){
-
+        displayWeather(currentWeather,!isChecked)
+    }else{
+        displayWeather(currentWeather,!isChecked)
     }
 }
 
-function displayWeather(currentWeather){
+function displayWeather(currentWeather,isCelsius){
     const wrap = document.querySelector('.info-wrap')
     while(wrap.firstChild){
         wrap.removeChild(wrap.firstChild)
+    }
+    let heat
+    let uniCode
+    if(isCelsius){
+        heat = currentWeather.temp
+        uniCode = '\u00B0C'
+    }
+    else{
+        heat = currentWeather.faren
+        uniCode = '\u00B0F'
     }
 
     const cloud = document.createElement('p')
@@ -83,7 +102,7 @@ function displayWeather(currentWeather){
     const wind = document.createElement('p')
 
     cloud.textContent = `cloud: ${currentWeather.cloud}`
-    temp.textContent = `temp: ${currentWeather.temp}\u00B0C`
+    temp.textContent = `temp: ${heat}${uniCode}`
     humidity.textContent = `humidity: ${currentWeather.humidity}`
     wind.textContent = `wind: ${currentWeather.wind} Kph`
 
